@@ -9,7 +9,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Maleficarum\\Database\\": "src/Logger/"
+			"Maleficarum\\Logger\\": "src/Logger/"
 		}
 	},
 	"repositories": [
