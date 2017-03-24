@@ -1,0 +1,20 @@
+{
+	"name": "maleficarum/logger",
+	"description": "Maleficarum logger component.",
+	"license": "proprietary",
+	"require": {
+		"php": ">=7.0",
+		"maleficarum/ioc": "^2.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"Maleficarum\\Database\\": "src/Logger/"
+		}
+	},
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "git@github.com:pharaun13/maleficarum-ioc.git"
+		}
+	]
+}
