@@ -49,7 +49,7 @@ class Initializer {
      * @param \Monolog\Logger $logger
      * @param string $messagePrefix
      */
-	private static function addMessagePrefixProcessor(\Monolog\Logger $logger, string $messagePrefix) {
+    private static function addMessagePrefixProcessor(\Monolog\Logger $logger, string $messagePrefix) {
         $logger->pushProcessor(function (array $record) use ($messagePrefix) {
             $record['message'] = $messagePrefix . $record['message'];
 
