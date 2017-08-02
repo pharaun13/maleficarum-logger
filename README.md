@@ -1,6 +1,10 @@
 # Change Log
 This is the Maleficarum Logger component. It uses monolog as it bases but provides initializers and builders for use in api/proxy/worker projects.
 
+## [2.0.0] - 2017-08-02
+### Changed
+- Make use of nullable types provided in PHP 7.1 (http://php.net/manual/en/migration71.new-features.php)
+
 ## [1.1.0] - 2017-07-27
 ### Added
 - Make it possible to set log message prefix

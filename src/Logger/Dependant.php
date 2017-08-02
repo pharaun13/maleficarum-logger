@@ -7,9 +7,8 @@ declare (strict_types=1);
 namespace Maleficarum\Logger;
 
 trait Dependant {
-    
     /* ------------------------------------ Class Property START --------------------------------------- */
-    
+
     /**
      * Internal storage for the logger object.
      *
@@ -18,13 +17,14 @@ trait Dependant {
     protected $logger = null;
 
     /* ------------------------------------ Class Property END ----------------------------------------- */
-    
+
     /* ------------------------------------ Class Methods START ---------------------------------------- */
-    
+
     /**
      * Inject a new logger object.
      *
      * @param \Psr\Log\LoggerInterface $logger
+     *
      * @return \Maleficarum\Logger\Dependant
      */
     public function setLogger(\Psr\Log\LoggerInterface $logger) {
@@ -36,9 +36,9 @@ trait Dependant {
     /**
      * Fetch the currently assigned logger object.
      *
-     * @return \Psr\Log\LoggerInterface
+     * @return null|\Psr\Log\LoggerInterface
      */
-    public function getLogger() {
+    public function getLogger(): ?\Psr\Log\LoggerInterface {
         return $this->logger;
     }
 
@@ -52,7 +52,6 @@ trait Dependant {
 
         return $this;
     }
-    
+
     /* ------------------------------------ Class Methods END ------------------------------------------ */
-    
 }
