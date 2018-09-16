@@ -25,7 +25,7 @@ class Initializer {
         $builders = $opts['builders'] ?? [];
         is_array($builders) or $builders = [];
         if (!isset($builders['logger']['skip'])) {
-            \Maleficarum\Ioc\Container::register('Monolog\Logger', function () use ($opts) {
+            \Maleficarum\Ioc\Container::registerBuilder('Monolog\Logger', function () use ($opts) {
                 $logger = new \Monolog\Logger('api');
                 $prefix = isset($opts['prefix']) ? $opts['prefix'] : "Maleficarum";
                 $handler = new \Monolog\Handler\SyslogHandler('[PHP][' . $prefix . '][Api]', \LOG_USER,
@@ -40,7 +40,7 @@ class Initializer {
         }
 
         // load logger object
-        \Maleficarum\Ioc\Container::registerDependency('Maleficarum\Logger', \Maleficarum\Ioc\Container::get('Monolog\Logger'));
+        \Maleficarum\Ioc\Container::registerShare('Maleficarum\Logger', \Maleficarum\Ioc\Container::get('Monolog\Logger'));
 
         // return initializer name
         return __METHOD__;
