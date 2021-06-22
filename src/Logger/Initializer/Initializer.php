@@ -35,6 +35,20 @@ class Initializer {
                     self::addMessagePrefixProcessor($logger, $opts['logger.message_prefix']);
                 }
 
+                if (isset($opts['logger.plugins'])) {
+                    if (!is_array($opts['logger.plugins'])) {
+                        throw new \InvalidArgumentException('logger.plugins option must be an array of callables, given: ' . gettype($opts['logger.plugins']));
+                    }
+                    foreach ($opts['logger.plugins'] as $plugin) {
+                        if(!is_callable($plugin)) {
+                            throw new \InvalidArgumentException(
+                                sprintf('Logger plugins must be callables, %s is not callable', $plugin)
+                            );
+                        }
+                        $plugin($logger);
+                    }
+                }
+
                 return $logger;
             });
         }
