@@ -13,6 +13,9 @@ namespace Maleficarum\Logger\Initializer;
 class Initializer {
     /* ------------------------------------ Class Methods START ---------------------------------------- */
 
+    private static $defaultPlugins = [
+        ['\Maleficarum\ContextTracing\Plugin\MaleficarumMonologLogger', 'addProcessor']
+    ];
     /**
      * This method will initialize the entire package.
      *
@@ -45,6 +48,12 @@ class Initializer {
                                 sprintf('Logger plugins must be callables, %s is not callable', $plugin)
                             );
                         }
+                        $plugin($logger);
+                    }
+                }
+                foreach (self::$defaultPlugins as $plugin) {
+                    $class = $plugin[0];
+                    if (class_exists($class)) {
                         $plugin($logger);
                     }
                 }
