@@ -1,6 +1,17 @@
 # Change Log
 This is the Maleficarum Logger component. It uses monolog as it bases but provides initializers and builders for use in api/proxy/worker projects.
 
+## Using plugins 
+
+You can pass array of plugins via ```logger.plugins``` configuration option. Plugin has to be a callable. There will be one argument passed
+- instance of \Monolog\Logger class
+
+## [3.1.0] - 2021-09-01
+### Added
+- Abilty to plugins via configuration
+- Default context processor plugin
+- Dependency to context tracker package 
+
 ## [3.0.0] - 2018-09-17  
 ### Changed  
 - Upgraded IoC component to version 3.x  
