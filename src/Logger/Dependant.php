@@ -25,9 +25,9 @@ trait Dependant {
      *
      * @param \Psr\Log\LoggerInterface $logger
      *
-     * @return \Maleficarum\Logger\Dependant
+     * @return $this
      */
-    public function setLogger(\Psr\Log\LoggerInterface $logger) {
+    public function setLogger(\Psr\Log\LoggerInterface $logger) : self {
         $this->logger = $logger;
 
         return $this;
@@ -45,9 +45,9 @@ trait Dependant {
     /**
      * Detach the currently assigned logger object.
      *
-     * @return \Maleficarum\Logger\Dependant
+     * @return $this
      */
-    public function detachLogger() {
+    public function detachLogger() : self {
         $this->logger = null;
 
         return $this;
