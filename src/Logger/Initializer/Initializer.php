@@ -43,8 +43,7 @@ class Initializer {
 
                 $logger = new \Monolog\Logger($opts['logger.channel_name']);
 
-                $prefix = isset($opts['prefix']) ? $opts['prefix'] : "Maleficarum";
-                $handler = new \Monolog\Handler\SyslogHandler('[PHP][' . $prefix . '-' . $opts['logger.rid_provider']->getRid() . '][' .$opts['logger.component']. ']', \LOG_USER,
+                $handler = new \Monolog\Handler\SyslogHandler('[PHP][' . $opts['logger.rid_provider']->getRid() . '][' .$opts['logger.component']. ']', \LOG_USER,
                     $opts['logger.min_level'], true, \LOG_PID);
 
                 $logger->pushHandler($handler);
