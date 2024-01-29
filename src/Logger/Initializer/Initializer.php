@@ -35,7 +35,7 @@ class Initializer {
                     throw new \Exception('missing loggers component name');
                 }
 
-                if (!isset($opts['logger.rid_provider'])) {
+                if (!isset($opts['logger.rid_provider']) || !($opts['logger.rid_provider'] instanceof RidProvider)) {
                     throw new \Exception('Missing loggers rid provider or wrong type');
                 }
 
