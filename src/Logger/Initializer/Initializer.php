@@ -10,6 +10,8 @@ declare (strict_types=1);
 
 namespace Maleficarum\Logger\Initializer;
 
+use Maleficarum\Logger\RidProvider;
+
 class Initializer {
     /* ------------------------------------ Class Methods START ---------------------------------------- */
 
@@ -26,13 +28,37 @@ class Initializer {
         is_array($builders) or $builders = [];
         if (!isset($builders['logger']['skip'])) {
             \Maleficarum\Ioc\Container::registerBuilder('Monolog\Logger', function () use ($opts) {
-                $logger = new \Monolog\Logger('api');
-                $prefix = isset($opts['prefix']) ? $opts['prefix'] : "Maleficarum";
-                $handler = new \Monolog\Handler\SyslogHandler('[PHP][' . $prefix . '][Api]', \LOG_USER,
-                    \Monolog\Logger::DEBUG, true, \LOG_PID);
+                if(!isset($opts['logger.channel_name'])) {
+                    throw new \Exception('missing loggers channel name');
+                }
+                if(!isset($opts['logger.component'])) {
+                    throw new \Exception('missing loggers component name');
+                }
+
+                if (!isset($opts['logger.rid_provider']) || !($opts['logger.rid_provider'] instanceof RidProvider)) {
+                    throw new \Exception('Missing loggers rid provider or wrong type');
+                }
+
+                $opts['logger.min_level'] = $opts['logger.min_level'] ?? \Monolog\Logger::DEBUG;
+
+                $logger = new \Monolog\Logger($opts['logger.channel_name']);
+
+                $handler = new \Monolog\Handler\SyslogHandler('[PHP][' . $opts['logger.rid_provider']->getRid() . '][' .$opts['logger.component']. ']', \LOG_USER,
+                    $opts['logger.min_level'], true, \LOG_PID);
+
                 $logger->pushHandler($handler);
+
                 if (isset($opts['logger.message_prefix'])) {
                     self::addMessagePrefixProcessor($logger, $opts['logger.message_prefix']);
+                }
+
+                if(!empty($opts['logger.processors'])) {
+                    foreach($opts['logger.processors'] as $processor) {
+                        if (!is_callable($processor)) {
+                            throw new \Exception('Wrong logger config, processor is not a callable');
+                        }
+                        $logger->pushProcessor($processor);
+                    }
                 }
 
                 return $logger;
@@ -57,6 +83,7 @@ class Initializer {
             return $record;
         });
     }
+
 
     /* ------------------------------------ Class Methods END ------------------------------------------ */
 }
